@@ -53,11 +53,29 @@ function FallingHearts() {
 
 export default function ProposalPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-    video.play().catch(() => {});
+
+    const onCanPlay = () => {
+      setReady(true);
+      video.play().catch(() => {});
+    };
+
+    // Хэрэв аль хэдийн ачаалагдсан бол
+    if (video.readyState >= 3) {
+      onCanPlay();
+      return;
+    }
+
+    video.addEventListener("canplaythrough", onCanPlay);
+    video.load();
+
+    return () => {
+      video.removeEventListener("canplaythrough", onCanPlay);
+    };
   }, []);
 
   const handleTap = useCallback(() => {
@@ -69,14 +87,29 @@ export default function ProposalPage() {
 
   return (
     <div className="relative w-screen h-dvh" onClick={handleTap}>
+      {/* Loading screen */}
+      {!ready && (
+        <div className="fixed inset-0 z-50 bg-black flex items-center justify-center">
+          <div className="text-center">
+            <div
+              className="text-5xl mb-4"
+              style={{ animation: "heartBeat 1.5s infinite" }}
+            >
+              💕
+            </div>
+            <p className="text-white/70 text-sm">Түр хүлээнэ үү...</p>
+          </div>
+        </div>
+      )}
+
       {/* Background Video */}
       <div className="fixed inset-0 z-0 overflow-hidden">
         <video
           ref={videoRef}
-          autoPlay
           loop
           muted
           playsInline
+          preload="auto"
           className="w-full h-full object-cover"
           src="/bg/video.mp4"
         />
@@ -85,7 +118,7 @@ export default function ProposalPage() {
 
       <FallingHearts />
 
-      <div className="relative z-20 flex items-end justify-center w-full h-full px-4 pt-[15%] pointer-events-none">
+      <div className="relative z-20 flex items-center justify-center w-full h-full px-4 mt-[40vh] pointer-events-none">
         <div
           className="text-center max-w-lg"
           style={{

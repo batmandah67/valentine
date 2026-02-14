@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "💕 Үерхэх Санал",
-  description: "Чамд зориулсан онцгой санал",
+  title: "💕 Би чамд хайртай",
+  description: "Чамд зориулсан",
 };
 
 export default function RootLayout({
@@ -13,6 +13,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="mn">
+      <head>
+        <link rel="preload" href="/bg/video.mp4" as="video" type="video/mp4" />
+      </head>
       <body>{children}</body>
     </html>
   );
