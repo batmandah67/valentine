@@ -147,16 +147,16 @@ export default function ProposalPage() {
               textShadow: "0 2px 10px rgba(0,0,0,0.7)",
               animation: "fadeInSlideUp 1s ease 0.3s both",
             }}
-          >
-            ♾️💌
-          </p>
+          ></p>
           <p
             className="text-base md:text-lg text-white/90 mt-4"
             style={{
               textShadow: "0 1px 5px rgba(0,0,0,0.5)",
               animation: "fadeInSlideUp 1s ease 0.6s both",
             }}
-          ></p>
+          >
+            ♾️💌
+          </p>
         </div>
       </div>
     </div>
