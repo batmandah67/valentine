@@ -54,6 +54,7 @@ function FallingHearts() {
 export default function ProposalPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [ready, setReady] = useState(false);
+  const [tapped, setTapped] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -83,6 +84,7 @@ export default function ProposalPage() {
     if (!video) return;
     video.muted = false;
     video.play().catch(() => {});
+    setTapped(true);
   }, []);
 
   return (
@@ -118,6 +120,20 @@ export default function ProposalPage() {
 
       <FallingHearts />
 
+      {!tapped && ready && (
+        <div className="fixed inset-0 z-30 flex items-center justify-center pointer-events-none">
+          <p
+            className="text-white/80 text-lg"
+            style={{
+              textShadow: "0 1px 5px rgba(0,0,0,0.5)",
+              animation: "pulse 2s infinite",
+            }}
+          >
+            Дэлгэцэн дээр нэг удаа дарна уу 🔊
+          </p>
+        </div>
+      )}
+
       <div className="relative z-20 flex items-center justify-center w-full h-full px-4 mt-[40vh] pointer-events-none">
         <div
           className="text-center max-w-lg"
@@ -132,7 +148,7 @@ export default function ProposalPage() {
               animation: "fadeInSlideUp 1s ease 0.3s both",
             }}
           >
-            Дараа насандаа биш энэ насандаа ХАМТДАА байцгаая ❤️
+            ♾️💌
           </p>
           <p
             className="text-base md:text-lg text-white/90 mt-4"
@@ -140,9 +156,7 @@ export default function ProposalPage() {
               textShadow: "0 1px 5px rgba(0,0,0,0.5)",
               animation: "fadeInSlideUp 1s ease 0.6s both",
             }}
-          >
-            Энэ онцгой өдрийг хамтдаа тэмдэглэцгээе!
-          </p>
+          ></p>
         </div>
       </div>
     </div>
