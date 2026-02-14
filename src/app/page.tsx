@@ -4,7 +4,13 @@ import { useState, useEffect, useRef, useCallback } from "react";
 
 function FallingHearts() {
   const [hearts, setHearts] = useState<
-    { id: number; left: number; size: number; delay: number; duration: number }[]
+    {
+      id: number;
+      left: number;
+      size: number;
+      delay: number;
+      duration: number;
+    }[]
   >([]);
 
   useEffect(() => {
@@ -45,7 +51,7 @@ function FallingHearts() {
   );
 }
 
-function BackgroundVideo() {
+export default function ProposalPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -57,37 +63,29 @@ function BackgroundVideo() {
   const handleTap = useCallback(() => {
     const video = videoRef.current;
     if (!video) return;
-    if (video.muted) {
-      video.muted = false;
-    }
-    if (video.paused) {
-      video.play().catch(() => {});
-    }
+    video.muted = false;
+    video.play().catch(() => {});
   }, []);
 
   return (
-    <div className="fixed inset-0 z-0 overflow-hidden" onClick={handleTap}>
-      <video
-        ref={videoRef}
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="w-full h-full object-cover"
-        src="/bg/video.mp4"
-      />
-      <div className="fixed inset-0 bg-black/30 pointer-events-none" />
-    </div>
-  );
-}
+    <div className="relative w-screen h-dvh" onClick={handleTap}>
+      {/* Background Video */}
+      <div className="fixed inset-0 z-0 overflow-hidden">
+        <video
+          ref={videoRef}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover"
+          src="/bg/video.mp4"
+        />
+        <div className="fixed inset-0 bg-black/30 pointer-events-none" />
+      </div>
 
-export default function ProposalPage() {
-  return (
-    <div className="relative w-screen h-dvh">
-      <BackgroundVideo />
       <FallingHearts />
 
-      <div className="relative z-20 flex items-center justify-center w-full h-full px-4 pt-[15%]">
+      <div className="relative z-20 flex items-end justify-center w-full h-full px-4 pt-[15%] pointer-events-none">
         <div
           className="text-center max-w-lg"
           style={{
